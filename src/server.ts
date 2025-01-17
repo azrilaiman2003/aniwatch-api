@@ -9,11 +9,14 @@ import {
   cacheControlMiddleware,
 } from "./middleware/cache.js";
 import { hianimeRouter } from "./routes/hianime.js";
+import { quotesRouter } from "./routes/quotes.js";
 
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
+import { cors } from "hono/cors";
+import { createClient } from '@supabase/supabase-js'
 
 import pkgJson from "../package.json" with { type: "json" };
 import { errorHandler, notFoundHandler } from "./config/errorHandler.js";
@@ -50,12 +53,39 @@ app.get("/v", async (c) =>
 app.use(cacheConfigSetter(BASE_PATH.length));
 
 app.basePath(BASE_PATH).route("/hianime", hianimeRouter);
+app.basePath(BASE_PATH).route("/quotes", quotesRouter);
 app
   .basePath(BASE_PATH)
   .get("/anicrush", (c) => c.text("Anicrush could be implemented in future."));
 
 app.notFound(notFoundHandler);
 app.onError(errorHandler);
+
+// Initialize Supabase client
+const supabase = createClient(
+  process.env.SUPABASE_URL!,
+  process.env.SUPABASE_KEY!
+)
+
+app.get('/quotes', async (c) => {
+  try {
+    const { data, error } = await supabase
+      .from('kartun')
+      .select('*')
+      .order('random()')
+      .limit(1)
+      .single()
+
+    if (error) {
+      throw error
+    }
+
+    return c.json(data)
+  } catch (error) {
+    console.error('Error fetching quote:', error)
+    return c.json({ error: 'Failed to fetch quote' }, 500)
+  }
+})
 
 // NOTE: this env is "required" for vercel deployments
 if (!Boolean(process.env?.ANIWATCH_API_VERCEL_DEPLOYMENT)) {
