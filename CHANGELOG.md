@@ -1,4 +1,13 @@
-# 3.0.0 (2025-05-25)
+## [3.0.1](https://github.com/ghoshRitesh12/aniwatch-api/compare/v3.0.0...v3.0.1) (2025-05-25)
+
+
+### Bug Fixes
+
+* add missing quotesRouter import in server.ts ([d67238c](https://github.com/ghoshRitesh12/aniwatch-api/commit/d67238c652de239fc21baeff83e3d9f29099f451))
+
+
+
+# [3.0.0](https://github.com/ghoshRitesh12/aniwatch-api/compare/62efb7b8666d27476a816416f127db7b2162b073...v3.0.0) (2025-05-25)
 
 
 ### Bug Fixes
