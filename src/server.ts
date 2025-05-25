@@ -14,6 +14,7 @@ import { errorHandler, notFoundHandler } from "./config/errorHandler.js";
 import type { AniwatchAPIVariables } from "./config/variables.js";
 
 import { hianimeRouter } from "./routes/hianime.js";
+import { quotesRouter } from "./routes/quotes.js";
 import { logging } from "./middleware/logging.js";
 import { cacheConfigSetter, cacheControl } from "./middleware/cache.js";
 
