@@ -3,8 +3,6 @@ import https from "https";
 import { Hono } from "hono";
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
-import { cors } from "hono/cors";
-import { createClient } from '@supabase/supabase-js'
 
 import { log } from "./config/logger.js";
 import { corsConfig } from "./config/cors.js";
@@ -31,12 +29,12 @@ app.use(corsConfig);
 app.use(cacheControl);
 
 /*
-    CAUTION: 
+    CAUTION:
     Having the "ANIWATCH_API_HOSTNAME" env will
     enable rate limitting for the deployment.
     WARNING:
     If you are using any serverless environment, you must set the
-    "ANIWATCH_API_DEPLOYMENT_ENV" to that environment's name, 
+    "ANIWATCH_API_DEPLOYMENT_ENV" to that environment's name,
     otherwise you may face issues.
 */
 const isPersonalDeployment = Boolean(env.ANIWATCH_API_HOSTNAME);
@@ -67,31 +65,7 @@ app.basePath(BASE_PATH).get("/anicrush", (c) =>
 app.notFound(notFoundHandler);
 app.onError(errorHandler);
 
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_KEY!
-)
 
-app.get('/quotes', async (c) => {
-  try {
-    const { data, error } = await supabase
-      .from('kartun')
-      .select('*')
-      .order('random()')
-      .limit(1)
-      .single()
-
-    if (error) {
-      throw error
-    }
-
-    return c.json(data)
-  } catch (error) {
-    console.error('Error fetching quote:', error)
-    return c.json({ error: 'Failed to fetch quote' }, 500)
-  }
-})
 
 //
 (function () {

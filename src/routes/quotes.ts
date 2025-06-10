@@ -1,15 +1,8 @@
 import { Hono } from "hono";
 import { createClient } from '@supabase/supabase-js'
-import type { AniwatchAPIVariables } from "../config/variables.js";
+import type { ServerContext } from "../config/context.js";
 
-interface AnimeQuote {
-  id: number;
-  anime: string;
-  character: string;
-  quote: string;
-}
-
-const quotesRouter = new Hono<{ Variables: AniwatchAPIVariables }>();
+const quotesRouter = new Hono<ServerContext>();
 
 // Initialize Supabase client
 const supabase = createClient(
