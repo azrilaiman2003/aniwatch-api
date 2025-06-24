@@ -1,3 +1,12 @@
+# [3.2.0](https://github.com/ghoshRitesh12/aniwatch-api/compare/v3.1.1...v3.2.0) (2025-06-24)
+
+
+### Features
+
+* update aniwatch pkg ([89644e2](https://github.com/ghoshRitesh12/aniwatch-api/commit/89644e2d2e4bc652c7062636113ffdcb2bb1df32))
+
+
+
 ## [3.1.1](https://github.com/ghoshRitesh12/aniwatch-api/compare/v3.1.0...v3.1.1) (2025-06-24)
 
 
